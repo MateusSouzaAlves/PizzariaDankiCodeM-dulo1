@@ -1,6 +1,7 @@
 package com.mateuscurso.pizzariadankicode.pizza;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class PizzaController {
     private final PizzaService pizzaService;
 
 @PostMapping
-public void cadastrar(@RequestBody @Valid PizzaDTO dto){
+    public void cadastrar(@RequestBody @Valid PizzaDTO dto){
 
     pizzaService.criarPizza(dto);
 }
@@ -26,9 +27,19 @@ public void cadastrar(@RequestBody @Valid PizzaDTO dto){
 }
 
 @GetMapping("/{id}")
-    public PizzaDTO buscarPorID(@PathVariable Long id){
+    public PizzaDTO buscarPorID(@PathVariable @NotNull Long id){
 
     return pizzaService.buscarPorID(id);
 }
 
+@PutMapping("/{id}")
+    public PizzaDTO atualizar(@PathVariable @NotNull Long id, @RequestBody @Valid PizzaDTO dto){
+    PizzaDTO pizzaAtualizada = pizzaService.atualizarPizza(id, dto);
+    return pizzaAtualizada;
+}
+
+@DeleteMapping("/{id}")
+    public void excluir(@PathVariable @NotNull Long id){
+        pizzaService.excluir(id);
+}
 }

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class PizzaDTO {
 
+    private Long id;
     @NotBlank
     private String nome;
     @Positive

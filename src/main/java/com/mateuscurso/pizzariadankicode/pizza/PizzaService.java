@@ -20,7 +20,7 @@ public class PizzaService {
         Pizza pizza = modelMapper.map(dto, Pizza.class);
         pizzaRepository.save(pizza);
         return modelMapper.map(pizza, PizzaDTO.class);
-}
+    }
 
     public List<PizzaDTO> buscarTodos() {
         return pizzaRepository.findAll().stream().map(p -> modelMapper.map(p, PizzaDTO.class)).
@@ -30,5 +30,17 @@ public class PizzaService {
     public PizzaDTO buscarPorID(Long id){
         Pizza pizza = pizzaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
         return modelMapper.map(pizza, PizzaDTO.class);
+    }
+
+    public PizzaDTO atualizarPizza(Long id, PizzaDTO dto) {
+        Pizza pizza = modelMapper.map(dto, Pizza.class);
+        pizza.setId(id);
+        pizza = pizzaRepository.save(pizza);
+        return modelMapper.map(pizza, PizzaDTO.class);
+    }
+
+
+    public void excluir(Long id) {
+        pizzaRepository.deleteById(id);
     }
 }
